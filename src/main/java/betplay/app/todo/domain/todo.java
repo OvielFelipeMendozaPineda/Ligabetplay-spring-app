@@ -1,4 +1,6 @@
-package betplay.app.Player.domain;
+package betplay.app.todo.domain;
+
+import java.sql.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,20 +9,20 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
- * Player
+ * todo
  */
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@ToString
-public class Player {
+@NoArgsConstructor
+@AllArgsConstructor
+public class todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String fullName;
+    private long id;
+    private String description;
+    private boolean isCompleted;
+    private Date dueDate;
 
 }
