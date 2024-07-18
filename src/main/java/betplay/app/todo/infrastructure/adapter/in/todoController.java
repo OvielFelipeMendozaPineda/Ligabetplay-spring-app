@@ -1,5 +1,7 @@
 package betplay.app.Todo.infrastructure.adapter.in;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,9 +57,16 @@ public class TodoController {
         }
     }
     @PostMapping("/postTodo")
-    public ResponseEntity<Optional<Todo>> postTodo(@RequestBody Todo todo) {
+    public ResponseEntity<Optional<Todo>> postTodo(@RequestParam String description, @RequestParam String dueDateIn ) {
         try {
-            Todo savedTodo = todoService.save(todo);
+            Todo toSaveTodo = new Todo();
+            toSaveTodo.setId(null);
+            toSaveTodo.setDescription(description);
+            toSaveTodo.setCompleted(false);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date dueDate = dateFormat.parse(dueDateIn);
+            toSaveTodo.setDueDate(dueDate);
+            Todo savedTodo = todoService.save(toSaveTodo);
             if (savedTodo != null) {
                 return new ResponseEntity<>(HttpStatus.CREATED);
             } else {
@@ -67,5 +76,8 @@ public class TodoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/form")
+    public String formulario() {
+        return "/formulario";
+    }
 }

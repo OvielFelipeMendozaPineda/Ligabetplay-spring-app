@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/formularioStyle.css}">
+    <title>Athlex</title>
+</head>
+<body>
+
+    <form action="http://localhost:8080/todos/postTodo" method="post" id="form">
+        <label for="description"> Nombre </label>
+        <input type="text" id="description" name="description">
+        <label for="dueDateIn">Fecha </label>
+        <input type="date" name="dueDateIn" id="dueDateIn">
+        <button type="submit"> Enviar </button>
+    </form>
+    <Script>
+        const btn = document.querySelector("button")
+        const form = document.querySelector("#form")
+        btn.addEventListener("click", (e) => {
+            let fecha = document.createElement("p")
+            let fechaLabel = document.createElement("label")
+            let nombreLabel = document.createElement("label")
+            nombreLabel.innerText = "Nombre"
+            fechaLabel.innerText = "fecha"
+            let name = document.createElement("p")
+            btn.disabled = true
+            let data = Object.fromEntries(new FormData(form).entries());
+            console.log(JSON.stringify(data.description));
+            let nameInput = document.querySelector("#description")
+            let dateInput = document.querySelector("#dueDateIn")
+            name.innerHTML = nameInput.value
+            fecha.innerHTML = dateInput.value
+            form.appendChild(nombreLabel)
+            form.appendChild(name)
+            form.appendChild(fechaLabel)
+            form.appendChild(fecha)
+            form.submit()
+        })
+    </Script>
+</body>
+</html>
