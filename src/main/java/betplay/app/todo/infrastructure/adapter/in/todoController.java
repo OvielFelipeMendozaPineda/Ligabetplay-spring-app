@@ -22,11 +22,20 @@ import org.springframework.web.bind.annotation.PostMapping;
  * TodoController
  */
 @Controller
-// @RequestMapping("/todos")
+@RequestMapping("/todos")
 public class TodoController {
     @Autowired
     private TodoService todoService;
-
+    
+    @GetMapping("")
+    public String formulario() {
+        return "forward:/todos/formularioURL";
+    }
+    @GetMapping("/formularioURL")
+    public String showForm() {
+        return "/formulario";
+    }
+    
     @GetMapping("/getTodoById")
     @ResponseBody
     public ResponseEntity<Optional<Todo>> getTodo(@RequestParam Long id) {
@@ -56,7 +65,7 @@ public class TodoController {
         }
     }
     @PostMapping("/postTodo")
-    public ResponseEntity<Optional<Todo>> postTodo(@RequestParam String description, @RequestParam String dueDateIn ) {
+    public ResponseEntity<String> postTodo(@RequestParam String description, @RequestParam String dueDateIn ) {
         try {
             Todo toSaveTodo = new Todo();
             toSaveTodo.setId(null);
@@ -67,20 +76,12 @@ public class TodoController {
             toSaveTodo.setDueDate(dueDate);
             Todo savedTodo = todoService.save(toSaveTodo);
             if (savedTodo != null) {
-                return new ResponseEntity<>(HttpStatus.CREATED);
+                return  ResponseEntity.status(HttpStatus.CREATED).header("Location", "redirect:/todos/formulario").build();
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-    @GetMapping({"", "/", "/form"})
-    public String formulario() {
-        return "redirect:/formulario";
-    }
-    @GetMapping("/formulario")
-    public String showForm() {
-        return "/formulario";
     }
 }

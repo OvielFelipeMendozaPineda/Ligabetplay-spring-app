@@ -10,8 +10,8 @@ import betplay.app.Todo.domain.Todo;
  */
 public interface TodoRepositoryPort {
 
-    Optional<Todo> findById(Long id);
-    List<Todo> findAll();
-    Todo save(Todo todo);
-    void delete(Todo todo);
+    // Optional<Todo> findById(Long id);
+    // List<Todo> findAll();
+    // Todo save(Todo todo);
+    // void delete(Todo todo);
 }
