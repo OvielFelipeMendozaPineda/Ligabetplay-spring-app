@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import betplay.app.Todo.application.service.TodoService;
 import betplay.app.Todo.domain.Todo;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * TodoController
  */
 @Controller
-@RequestMapping("/todos")
+// @RequestMapping("/todos")
 public class TodoController {
     @Autowired
     private TodoService todoService;
@@ -76,8 +75,12 @@ public class TodoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/form")
+    @GetMapping({"", "/", "/form"})
     public String formulario() {
+        return "redirect:/formulario";
+    }
+    @GetMapping("/formulario")
+    public String showForm() {
         return "/formulario";
     }
 }
